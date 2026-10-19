@@ -3,11 +3,11 @@ LOM Demo para iPhone — cómo publicarla (GitHub Pages)
 1. En GitHub crea un repositorio nuevo, por ejemplo «lom-demo». Puede ser privado solo con GitHub Pro; si no, público
    (los datos van anonimizados).
 2. «Add file → Upload files»: arrastra TODO el contenido de esta carpeta (index.html, sw.js, manifest.webmanifest,
-   los tres icon-*.png y la carpeta data con sus 6 ficheros). Commit.
+   los tres icon-*.png y la carpeta data con sus 3 ficheros). Commit.
 3. Settings → Pages → Source: «Deploy from a branch», rama main, carpeta / (root). Guardar. En 1-2 minutos sale la
    dirección: https://TU_USUARIO.github.io/lom-demo/
 4. En el iPhone: abre esa dirección con Safari, espera a que cargue, botón Compartir → «Añadir a pantalla de inicio».
-5. Abre la app desde el icono y entra una vez en la pestaña 3D con wifi: descarga los sólidos (unos 45 MB) y quedan
+5. Abre la app desde el icono y entra una vez en la pestaña 3D con wifi: descarga los sólidos (unos 30 MB) y quedan
    guardados. Desde ahí funciona sin conexión.
 
 «Más → Restaurar la demo» vuelve al escenario base (borra cambios y versiones guardadas en el iPhone).
