@@ -102,7 +102,7 @@ html:has(body.mv),body.mv{overflow-x:hidden!important;max-width:100vw}
 body.mv .tzdr{width:100vw!important;min-width:0!important;bottom:var(--mvb)!important;padding:calc(env(safe-area-inset-top) + 12px) 12px 24px!important;z-index:2600!important}
 body.mv .tzveil{z-index:2590!important}
 body.mv #x_wf .xmain{overflow-x:auto;-webkit-overflow-scrolling:touch}
-body.mv #x_wf .xmain svg{min-width:640px}
+
 
 /* menú Más: título y explicación */
 body.mv .mv-t{display:flex;flex-direction:column;gap:1px;color:var(--ink)}
@@ -168,6 +168,82 @@ body.mv .tb-izq,body.mv .topbar .tb-grp{display:none!important}
 body.mv .bd3-v>div:has(>canvas){height:50vh!important}
 body.mv .bd3-tpp{position:fixed!important;left:12px!important;right:12px!important;top:140px!important;min-width:0!important;max-height:55vh;overflow:auto;z-index:2700!important}
 body.mv .bd .bd-der #bdVivo{padding:0 10px!important}
+
+/* ===================== v3 · MOVIMIENTO Y TEMA (patrones-movimiento-y-tema.md) · intensidad intermedia ===================== */
+:root{--ease-std:cubic-bezier(.4,0,.6,1);--ease-in:cubic-bezier(0,0,.2,1);--ease-panel:cubic-bezier(.25,.1,.3,1);--ease-card:cubic-bezier(0,0,.5,1);--ease-rebote:cubic-bezier(.3,1.6,.5,1);
+  --t-rapido:.24s;--t-medio:.32s;--t-panel:.42s;--rev-y:26px;--rev-t:.6s;--rev-op:.75s;--rev-paso:.08s;--cristal:saturate(180%) blur(20px)}
+@media (prefers-reduced-motion:reduce){:root{--t-rapido:0s;--t-medio:0s;--t-panel:0s;--rev-t:0s;--rev-op:0s;--rev-paso:0s}}
+/* 1 · aparición escalonada */
+body.mv .mv-rv{opacity:0;transform:translateY(var(--rev-y));transition:opacity var(--rev-op) var(--ease-in) var(--d,0s),transform var(--rev-t) var(--ease-in) var(--d,0s)}
+body.mv .mv-rv.mv-in{opacity:1;transform:none}
+@keyframes mvSubeIn{from{opacity:0;transform:translateY(var(--rev-y))}to{opacity:1;transform:none}}
+body.mv #kpis.mv-kin>.kv{animation:mvSubeIn var(--rev-t) var(--ease-in) both}
+body.mv #kpis.mv-kin>.kv:nth-child(2){animation-delay:calc(var(--rev-paso)*1)}body.mv #kpis.mv-kin>.kv:nth-child(3){animation-delay:calc(var(--rev-paso)*2)}
+body.mv #kpis.mv-kin>.kv:nth-child(4){animation-delay:calc(var(--rev-paso)*3)}body.mv #kpis.mv-kin>.kv:nth-child(5){animation-delay:calc(var(--rev-paso)*4)}
+body.mv #kpis.mv-kin>.kv:nth-child(6){animation-delay:calc(var(--rev-paso)*5)}body.mv #kpis.mv-kin>.kv:nth-child(7){animation-delay:calc(var(--rev-paso)*6)}
+/* cifra que cambia al simular */
+@keyframes mvCambio{0%{color:var(--copper-lt,#e0a06a);transform:scale(1.04)}100%{transform:none}}
+body.mv #kpis .kv .v.mv-chg{animation:mvCambio .9s var(--ease-card)}
+/* 5 · cifras grandes */
+body.mv #kpis .kv .l{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;opacity:.8}
+body.mv #kpis .kv .v{font-size:25px!important;line-height:1.08!important;letter-spacing:-.03em!important;margin:2px 0}
+body.mv #kpis .kv:first-child{grid-column:1/-1;padding:12px 14px!important}
+body.mv #kpis .kv:first-child .v{font-size:40px!important;letter-spacing:-.035em!important}
+body.mv #kpis .kv{border-radius:16px!important;transition:transform var(--t-rapido) var(--ease-card),background-color .34s ease}
+body.mv #kpis .kv:active{transform:scale(.97)}
+/* 3 · barra de pestañas de cristal con indicador que se desliza */
+body.mv #mvBar{background:color-mix(in srgb,var(--rock-800,#161b24) 74%,transparent)!important;-webkit-backdrop-filter:var(--cristal);backdrop-filter:var(--cristal);border-top:1px solid color-mix(in srgb,var(--line) 70%,transparent)!important;position:fixed}
+body.mv #mvBar .mv-ind{position:absolute;top:6px;height:46px;border-radius:14px;background:color-mix(in srgb,var(--copper,#c47a45) 16%,transparent);transition:left var(--t-panel) var(--ease-panel),width var(--t-panel) var(--ease-panel);pointer-events:none}
+body.mv #mvBar button{position:relative;z-index:1;transition:color var(--t-rapido) var(--ease-std),transform .12s var(--ease-std)}
+body.mv #mvBar button:active{transform:scale(.9)}
+body.mv #mvBar button.on svg{transform:translateY(-1px)}
+body.mv #mvBar svg{transition:transform var(--t-medio) var(--ease-rebote)}
+/* 4 · píldora fija con VAN y FCF al bajar */
+#mvPill{display:none}
+body.mv #mvPill{display:flex;position:fixed;z-index:2400;left:12px;right:12px;top:calc(env(safe-area-inset-top) + 8px);height:50px;align-items:center;gap:10px;padding:0 8px 0 16px;border-radius:25px;
+  background:color-mix(in srgb,var(--rock-800,#161b24) 76%,transparent);-webkit-backdrop-filter:var(--cristal);backdrop-filter:var(--cristal);border:1px solid color-mix(in srgb,var(--line) 70%,transparent);box-shadow:0 10px 30px rgba(0,0,0,.25);
+  transform:translateY(calc(-100% - 20px));opacity:0;pointer-events:none;transition:transform var(--t-panel) ease-out,opacity var(--t-medio) var(--ease-std)}
+body.mv #mvPill.on{transform:none;opacity:1;pointer-events:auto}
+body.mv #mvPill .mp-t{flex:1;min-width:0;display:flex;gap:14px;font:600 14px "IBM Plex Mono",monospace;color:var(--ink);white-space:nowrap;overflow:hidden}
+body.mv #mvPill .mp-t small{display:block;font:600 9.5px Inter,system-ui,sans-serif;letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase}
+body.mv #mvPill button{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:17px;height:34px;padding:0 12px;font:600 12.5px Inter,system-ui,sans-serif}
+body.mv #mvPill button.pri{background:var(--copper,#c47a45);border-color:var(--copper,#c47a45);color:#1a1209}
+body.mv.cfgopen #mvPill,body.mv.connopen #mvPill,body.mv.pfopen #mvPill,body.mv.mkopen #mvPill,body.mv.bdopen #mvPill{opacity:0;pointer-events:none;transform:translateY(calc(-100% - 20px))}
+/* 6 · paneles que suben como hojas y ventanas con velo */
+body.mv .panel,body.mv .conn,body.mv .pf,body.mv .mk,body.mv .bd{transform:translateY(105%)!important;opacity:1!important;transition:transform var(--t-panel) var(--ease-in),visibility 0s linear var(--t-panel)!important;border-radius:18px 18px 0 0!important;box-shadow:0 -10px 40px rgba(0,0,0,.35)!important}
+body.mv.cfgopen .panel,body.mv.connopen .conn,body.mv.pfopen .pf,body.mv.mkopen .mk,body.mv.bdopen .bd{transform:none!important;visibility:visible!important;transition:transform var(--t-panel) var(--ease-in),visibility 0s!important}
+body.mv .modal{background:rgba(0,0,0,.48)!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+@keyframes mvHoja{from{transform:translateY(48px);opacity:0}to{transform:none;opacity:1}}
+body.mv .modal.show .modal-card,body.mv .ma-ov.show .ma-m,body.mv .ux-k .ux-p{animation:mvHoja var(--t-panel) var(--ease-in) both}
+/* 7 · segmentados en cápsula */
+body.mv .conn-mines,body.mv .bd3-seg,body.mv .bd3-tabs .bd3-seg{display:inline-flex!important;flex-wrap:nowrap!important;gap:2px!important;padding:4px!important;border-radius:999px!important;background:color-mix(in srgb,var(--rock-700,#232a36) 80%,transparent);border:1px solid color-mix(in srgb,var(--line) 60%,transparent);max-width:100%;overflow-x:auto}
+body.mv .conn-mines .cmine{border:0!important;background:transparent;border-radius:999px!important;min-height:32px;padding:5px 14px!important;transition:background-color var(--t-rapido) var(--ease-std),color var(--t-rapido) var(--ease-std),transform .12s}
+body.mv .conn-mines .cmine.on{background:var(--copper)!important;color:#1a1209!important;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+body.mv .conn-mines .cmine:active,body.mv .bd3-seg button:active{transform:scale(.94)}
+body.mv .bd3-seg button{border-radius:999px!important;transition:background-color var(--t-rapido) var(--ease-std),color var(--t-rapido) var(--ease-std)}
+/* 9 · rebote suave: menú Más y desplegables */
+@keyframes mvHojaAbajo{from{transform:translateY(100%)}to{transform:none}}
+@keyframes mvPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+body.mv #mvSheet:not([hidden]) .mv-sh{animation:mvHojaAbajo var(--t-panel) var(--ease-panel) both}
+body.mv #mvSheet:not([hidden]) .mv-it,body.mv #mvSheet:not([hidden]) .mv-shh{animation:mvPop .46s var(--ease-rebote) both;animation-delay:calc(var(--i,0)*22ms + 60ms)}
+body.mv #mvSheet{transition:background-color var(--t-medio)}
+body.mv .mv-it{transition:transform .12s var(--ease-std),background-color var(--t-rapido)}
+body.mv .mv-it:active{transform:scale(.97)}
+@keyframes mvPopIn{from{opacity:0;transform:scale(.94) translateY(-6px)}to{opacity:1;transform:none}}
+body.mv .bd3-tpp:not([hidden]){animation:mvPopIn .38s var(--ease-rebote) both;transform-origin:top center}
+/* 8 · carrusel de gráficas con imán */
+body.mv .mv-carw{margin:14px 0 6px}
+body.mv .mv-carh{display:flex;justify-content:space-between;align-items:baseline;padding:0 2px 8px;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
+body.mv .mv-car{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -10px;padding:2px 10px 10px;scroll-padding:0 10px}
+body.mv .mv-car::-webkit-scrollbar{display:none}
+body.mv .mv-car>.card{flex:0 0 calc(100% - 26px);scroll-snap-align:center;scroll-snap-stop:always;margin:0!important;border-radius:20px!important}
+body.mv .mv-dots{display:flex;justify-content:center;gap:6px;padding:4px 0}
+body.mv .mv-dots button{width:8px;height:8px;padding:0;border:0;border-radius:4px;background:color-mix(in srgb,var(--ink) 30%,transparent);transition:width var(--t-medio) var(--ease-panel),background-color var(--t-medio)}
+body.mv .mv-dots button.on{width:24px;background:var(--ink)}
+/* tarjetas: esquinas amplias y respuesta al toque */
+body.mv .content>.card,body.mv .grupo>.card,body.mv #mvIni .mv-3dc{border-radius:20px!important}
+body.mv .mv-3dc{transition:transform var(--t-medio) var(--ease-card)}
+body.mv .mv-3dc:active{transform:scale(.98)}
 </style>
 
 <title>LOM Demo</title>
@@ -12477,6 +12553,46 @@ if(typeof MA!=='undefined'&&!MA.some(o=>o.id==='movil')){const g0=MA[0]&&MA[0].g
   en:{t:'Using the demo on the iPhone',a:'The demo is the same program with a tab bar at the bottom. Data are anonymised: mines MA, MB and MC, costs and revenue scaled and varied per item.',
     u:['Home: NPV, FCF, revenue, cost, margin, cash cost and AISC; below, the summary, the plant warning and every chart (“Open all” under More analysis).','Simulate: each cost item’s rate per mine (Cost drivers). Any change moves the NPV at once and is saved on the iPhone.','3D: viewer on top; one finger rotates, two fingers zoom and pan, a tap picks a solid and opens its card below. Further down, the stope chart, the summary by year (tap a row to mark that physical in 3D) and the task-database settings, with “All” for the strategy and the CuEq leveller.','Compare and Reports: plan and scenario comparison and the physicals and cost reports. Wide tables scroll sideways.','More: settings, physicals, market, equivalences, versions, risk, data, self-check, search, export to Excel, PDF, CSV and JSON, manual, undo and redo, theme, language and “Restore the demo”.'],
     s:['The first time the 3D opens it downloads the solids (about 45 MB) and keeps them: afterwards it works offline.','“Restore the demo” goes back to the base scenario and clears this iPhone’s changes and versions.']}});}
+/* ===================== v3 · MOVIMIENTO Y TEMA ===================== */
+const mvSinMov=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}};
+/* 3 · indicador deslizante de la barra */
+function mvIndicador(){const bar=document.getElementById('mvBar');if(!bar)return;let i=bar.querySelector('.mv-ind');if(!i){i=document.createElement('span');i.className='mv-ind';bar.prepend(i);}
+  const b=bar.querySelector('button.on');if(!b){i.style.opacity=0;return;}i.style.opacity=1;const r=b.getBoundingClientRect(),rb=bar.getBoundingClientRect();i.style.left=(r.left-rb.left+6)+'px';i.style.width=(r.width-12)+'px';}
+mvPintaBar=(function(f){return function(){const r=f.apply(this,arguments);try{mvIndicador();}catch(e){}return r;};})(mvPintaBar);
+window.addEventListener('resize',()=>{try{mvIndicador();}catch(e){}});
+/* 1 · aparición escalonada de tarjetas */
+let _mvIO=null;
+function mvReveal(){if(!document.body.classList.contains('mv'))return;if(!('IntersectionObserver' in window)||mvSinMov())return;
+  if(!_mvIO)_mvIO=new IntersectionObserver(es=>{const v=es.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);
+    v.forEach((e,k)=>{e.target.style.setProperty('--d',(k*0.08)+'s');e.target.classList.add('mv-in');_mvIO.unobserve(e.target);});},{threshold:.08,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.content>.card:not(.mv-rv),.content>.story:not(.mv-rv),#warnings:not(.mv-rv),#masBar:not(.mv-rv),.grupo>.card:not(.mv-rv),#mvIni:not(.mv-rv),.mv-carw:not(.mv-rv)').forEach(c=>{
+    if(c.offsetParent===null&&!c.closest('.mv-car'))return;c.classList.add('mv-rv');_mvIO.observe(c);});}
+/* entrada de las cifras al abrir, y destello cuando cambian al simular */
+let _mvKv={};
+function mvKpiVig(){const k=document.getElementById('kpis');if(!k||k._mvo)return;k._mvo=1;
+  if(!mvSinMov()){k.classList.add('mv-kin');setTimeout(()=>k.classList.remove('mv-kin'),1800);}
+  const lee=()=>{const o={};k.querySelectorAll('.kv').forEach((d,i)=>{const v=d.querySelector('.v');if(v)o[i]=v.textContent;});return o;};_mvKv=lee();
+  new MutationObserver(()=>{const n=lee();k.querySelectorAll('.kv').forEach((d,i)=>{const v=d.querySelector('.v');if(v&&_mvKv[i]!=null&&_mvKv[i]!==n[i]&&!k.classList.contains('mv-kin')){v.classList.remove('mv-chg');void v.offsetWidth;v.classList.add('mv-chg');}});_mvKv=n;mvPillPinta();}).observe(k,{childList:true,subtree:true,characterData:true});}
+/* 4 · píldora fija con VAN y FCF */
+function mvPillPinta(){const p=document.getElementById('mvPill');if(!p)return;const kv=[...document.querySelectorAll('#kpis .kv')];const t=i=>kv[i]?[kv[i].querySelector('.l').textContent.replace(/ @.*$/,''),kv[i].querySelector('.v').textContent]:['',''];
+  const a=t(0),b=t(1);p.querySelector('.mp-t').innerHTML=`<span><small>${escH(a[0])}</small>${escH(a[1])}</span><span><small>${escH(b[0])}</small>${escH(b[1])}</span>`;}
+function mvPill(){if(document.getElementById('mvPill'))return;const p=document.createElement('div');p.id='mvPill';p.setAttribute('role','region');p.setAttribute('aria-label','Resumen fijo');
+  p.innerHTML='<div class="mp-t"></div><button type="button" data-a="3d">3D</button><button type="button" class="pri" data-a="sim">Simular</button>';
+  p.addEventListener('click',e=>{const b=e.target.closest('button');if(b)mvVe(b.dataset.a);});document.body.appendChild(p);mvPillPinta();
+  const kb=document.getElementById('kbar');if(kb&&'IntersectionObserver' in window)new IntersectionObserver(es=>{const fuera=!es[0].isIntersecting&&es[0].boundingClientRect.top<0;p.classList.toggle('on',fuera);},{threshold:0}).observe(kb);}
+/* 8 · carrusel de gráficas en Inicio */
+function mvCarrusel(){if(document.querySelector('.mv-car'))return;const ids=['x_cf','x_wf'];const cs=ids.map(i=>document.getElementById(i)).filter(Boolean);
+  const st=document.getElementById('chartStack');if(st&&st.closest('.card'))cs.push(st.closest('.card'));if(cs.length<2)return;
+  const w=document.createElement('section');w.className='mv-carw';w.innerHTML='<div class="mv-carh"><span>Gráficas</span><span>desliza ⟷</span></div><div class="mv-car"></div><div class="mv-dots" role="tablist"></div>';
+  cs[0].parentNode.insertBefore(w,cs[0]);const car=w.querySelector('.mv-car'),dots=w.querySelector('.mv-dots');cs.forEach((c,i)=>{car.appendChild(c);const d=document.createElement('button');d.type='button';d.setAttribute('aria-label','Gráfica '+(i+1));d.onclick=()=>car.scrollTo({left:c.offsetLeft-10,behavior:mvSinMov()?'auto':'smooth'});dots.appendChild(d);});
+  const marca=()=>{const x=car.scrollLeft+car.clientWidth/2;let k=0,dm=1e9;cs.forEach((c,i)=>{const m=Math.abs(c.offsetLeft+c.offsetWidth/2-x);if(m<dm){dm=m;k=i;}});[...dots.children].forEach((d,i)=>d.classList.toggle('on',i===k));};
+  car.addEventListener('scroll',()=>{cancelAnimationFrame(car._r);car._r=requestAnimationFrame(marca);},{passive:true});marca();
+  try{renderAll();}catch(e){}}
+/* 9 · índice de cada elemento del menú Más para el escalonado */
+function mvSheetIdx(){document.querySelectorAll('#mvSheet .mv-it,#mvSheet .mv-shh').forEach((e,i)=>e.style.setProperty('--i',i));}
+/* arranque de la capa de movimiento */
+setTimeout(()=>{try{if(!document.body.classList.contains('mv'))return;mvCarrusel();mvPill();mvKpiVig();mvSheetIdx();mvIndicador();mvReveal();
+  ['renderAll','gToggle','gTodos','aplicarUI'].forEach(n=>{if(typeof window[n]==='function'){const f=window[n];window[n]=function(){const r=f.apply(this,arguments);setTimeout(()=>{try{mvReveal();}catch(e){}},30);return r;};}});}catch(e){console.error(e);}},60);
 
 </script>
 </body>
