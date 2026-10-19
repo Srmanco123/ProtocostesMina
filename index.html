@@ -244,6 +244,9 @@ body.mv .mv-dots button.on{width:24px;background:var(--ink)}
 body.mv .content>.card,body.mv .grupo>.card,body.mv #mvIni .mv-3dc{border-radius:20px!important}
 body.mv .mv-3dc{transition:transform var(--t-medio) var(--ease-card)}
 body.mv .mv-3dc:active{transform:scale(.98)}
+/* v3b · en el móvil se quita el filtro «Físicos ▾» de la barra del 3D */
+body.mv .bd3-fisw{display:none!important}
+body.mv .bd .bd3-v canvas{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 </style>
 
 <title>LOM Demo</title>
@@ -12530,16 +12533,36 @@ function mvSolidos(){if(_mvSolP)return _mvSolP;_mvSolP=(async()=>{if(!/^https?:/
       if(J.tipo==='LOM_TOPO'){try{bd3TopoPon(bd3LeeTopo(J,n));}catch(e){console.error(e);}}
       else{_bd3Auto=true;try{await bd3Carga(null,bd3Lee(J,n));}catch(e){console.error(e);}finally{_bd3Auto=false;}}}
   }finally{ov.remove();try{bd3Sync();}catch(e){}}})();return _mvSolP;}
-function mvAyuda3d(){const t=()=>document.querySelectorAll('.bd *').forEach(e=>{if(e.children.length===0&&/^Arrastrar: girar/.test(e.textContent))e.textContent='Un dedo: girar · Dos dedos: acercar y desplazar · Toque: elegir un sólido';if(e.children.length===0&&/Ctrl\+rueda para ampliar/.test(e.textContent))e.textContent='Esquema de cámaras · toca una cámara para elegirla o la fila FY para marcar un año; − / + amplía';});t();setTimeout(t,1500);setTimeout(t,5000);}
+function mvAyuda3d(){const t=()=>document.querySelectorAll('.bd *').forEach(e=>{if(e.children.length===0&&/^(Arrastrar: girar|Un dedo:)/.test(e.textContent))e.textContent='Un dedo: mover · Dos dedos: acercar, girar e inclinar · Toque: elegir un sólido';if(e.children.length===0&&/Ctrl\+rueda para ampliar/.test(e.textContent))e.textContent='Esquema de cámaras · toca una cámara para elegirla o la fila FY para marcar un año; − / + amplía';});t();setTimeout(t,1500);setTimeout(t,5000);}
 /* ---------- gestos en el 3D: dos dedos acercan (pellizco) y desplazan ---------- */
-function mvGestos(cv){if(cv._mvg)return;cv._mvg=1;cv.style.touchAction='none';const P=new Map();let g=null,pin=false;
-  const dos=()=>{const [a,b]=[...P.values()];return {d:Math.hypot(a.x-b.x,a.y-b.y),x:(a.x+b.x)/2,y:(a.y+b.y)/2};};
-  cv.addEventListener('pointerdown',e=>{if(e.pointerType!=='touch')return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});if(P.size>=2){pin=true;g=dos();e.stopImmediatePropagation();}else if(pin)e.stopImmediatePropagation();},true);
-  cv.addEventListener('pointermove',e=>{if(e.pointerType!=='touch'||!P.has(e.pointerId))return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});if(!pin)return;e.stopImmediatePropagation();if(P.size<2||!g)return;
-    const n=dos(),V=_bd3V;if(!V)return;const k=V.cam;if(n.d>0&&g.d>0)k.d=Math.max(5,Math.min(80000,k.d*g.d/n.d));
-    const M=bd3Mat(V,cv.clientWidth,cv.clientHeight),f=k.d*0.0016,dx=n.x-g.x,dy=n.y-g.y;k.t=k.t.map((v,i)=>v-M.x[i]*dx*f+M.y[i]*dy*f);g=n;bd3Pide();},true);
-  const fin=e=>{if(!P.has(e.pointerId))return;P.delete(e.pointerId);if(pin){e.stopImmediatePropagation();if(P.size<2)g=null;if(!P.size)pin=false;}};
-  cv.addEventListener('pointerup',fin,true);cv.addEventListener('pointercancel',fin,true);}
+/* v3b (19 oct, Manuel: «al girar se mueve la página; mejor dos dedos para ampliar y girar y uno para moverlo»):
+   en el móvil el 3D recibe todos los toques. Un dedo desplaza el modelo; dos dedos acercan (hacia los dedos), giran al arrastrar
+   (horizontal: alrededor; vertical: inclinación) y al rotarlos; un toque corto elige un sólido. La página no se mueve sobre el 3D. */
+function mvGestos(cv){if(cv._mvg)return;cv._mvg=1;cv.style.touchAction='none';const P=new Map();let uno=null,dos=null,huboDos=false;
+  const med=()=>{const [a,b]=[...P.values()];return {d:Math.hypot(a.x-b.x,a.y-b.y),x:(a.x+b.x)/2,y:(a.y+b.y)/2,ang:Math.atan2(b.y-a.y,b.x-a.x)};};
+  const V0=()=>{const V=_bd3V;return V&&V.cam?V:null;};
+  const corta=e=>{e.stopImmediatePropagation();if(e.cancelable)e.preventDefault();};
+  cv.addEventListener('pointerdown',e=>{if(e.pointerType!=='touch')return;corta(e);try{cv.setPointerCapture(e.pointerId);}catch(er){}
+    P.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(P.size===1){uno={x:e.clientX,y:e.clientY,x0:e.clientX,y0:e.clientY,t0:performance.now(),mv:0};huboDos=false;}
+    else if(P.size===2){dos=med();huboDos=true;uno=null;try{bd3Pivote(cv);}catch(er){}}},true);
+  cv.addEventListener('pointermove',e=>{if(e.pointerType!=='touch'||!P.has(e.pointerId))return;corta(e);P.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    const V=V0();if(!V)return;const k=V.cam,w=cv.clientWidth,h=cv.clientHeight;
+    if(P.size===1&&uno&&!huboDos){const dx=e.clientX-uno.x,dy=e.clientY-uno.y;uno.x=e.clientX;uno.y=e.clientY;uno.mv+=Math.abs(dx)+Math.abs(dy);
+      if(uno.mv<6)return;const M=bd3Mat(V,w,h),f=k.d*0.0016;k.t=k.t.map((v,i)=>v-M.x[i]*dx*f+M.y[i]*dy*f);bd3Pide();return;}
+    if(P.size>=2&&dos){const n=med(),r=cv.getBoundingClientRect();
+      const s=(n.d>0&&dos.d>0)?dos.d/n.d:1,d0=k.d,d1=Math.max(5,Math.min(80000,d0*s)),sr=d1/d0;
+      const M=bd3Mat(V,w,h),f=d0*0.0016,ox=n.x-r.left-w/2,oy=n.y-r.top-h/2;
+      k.t=k.t.map((v,i)=>v+(M.x[i]*ox-M.y[i]*oy)*f*(1-sr));k.d=d1;
+      let da=n.ang-dos.ang;if(da>Math.PI)da-=2*Math.PI;if(da<-Math.PI)da+=2*Math.PI;
+      k.az-=(n.x-dos.x)*0.007+da;k.el=Math.min(1.53,Math.max(-0.6,k.el+(n.y-dos.y)*0.006));dos=n;bd3Pide();}},true);
+  const fin=e=>{if(!P.has(e.pointerId))return;corta(e);P.delete(e.pointerId);
+    if(e.type==='pointerup'&&!P.size&&uno&&!huboDos&&uno.mv<8&&performance.now()-uno.t0<400){const r=cv.getBoundingClientRect();
+      try{const i=bd3Dibuja([e.clientX-r.left,e.clientY-r.top]);bd3Elige(i,false);}catch(er){console.error(er);}}
+    if(P.size<2)dos=null;if(!P.size){uno=null;}else if(P.size===1)uno=null;};
+  cv.addEventListener('pointerup',fin,true);cv.addEventListener('pointercancel',fin,true);
+  ['touchstart','touchmove'].forEach(t=>cv.addEventListener(t,e=>{if(e.cancelable)e.preventDefault();},{passive:false}));
+  ['gesturestart','gesturechange','gestureend'].forEach(t=>cv.addEventListener(t,e=>e.preventDefault(),{passive:false}));}
 bd3Raton=(function(f){return function(cv){try{mvGestos(cv);}catch(e){}return f.apply(this,arguments);};})(bd3Raton);
 /* ---------- arranque ---------- */
 mvAplica();try{matchMedia('(max-width: 900px)').addEventListener('change',mvAplica);}catch(e){}
@@ -12548,10 +12571,10 @@ if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))window.addEv
 /* ---------- manual: cómo se usa en el iPhone ---------- */
 if(typeof MA!=='undefined'&&!MA.some(o=>o.id==='movil')){const g0=MA[0]&&MA[0].g;MA.splice(1,0,{id:'movil',g:g0,p:MA[0]&&MA[0].p,ir:()=>{maCierra();mvVe('mas');},
   es:{t:'Usar la demo en el iPhone',a:'La demo es el mismo programa con una barra de pestañas abajo. Los datos están anonimizados: minas MA, MB y MC, costes e ingresos escalados y con variación por partida.',
-    u:['Inicio: VAN, FCF, ingreso, coste, margen, cash cost y AISC; debajo, el resumen, el aviso de planta y todas las gráficas (con «Abrir todo» en Más análisis).','Simular: las tarifas de cada partida por mina (Conectores). Cualquier cambio mueve el VAN al momento y se guarda en el iPhone.','3D: el visor arriba; un dedo gira, dos dedos acercan y desplazan, un toque elige un sólido y abre su ficha debajo. Más abajo, el esquema de cámaras, el resumen por año (pulsar una fila marca ese físico en el 3D) y los ajustes del plan en BD, con «Todas» para la estrategia y el nivelador de CuEq.','Comparar e Informes: la comparativa de planes y escenarios y los informes de físicos y costes. Las tablas anchas se deslizan a los lados.','Más: configuración, físicos, mercado, equivalencias, versiones, riesgo, datos, autocontrol, buscador, exportar a Excel, PDF, CSV y JSON, manual, deshacer y rehacer, tema, idioma y «Restaurar la demo».'],
+    u:['Inicio: VAN, FCF, ingreso, coste, margen, cash cost y AISC; debajo, el resumen, el aviso de planta y todas las gráficas (con «Abrir todo» en Más análisis).','Simular: las tarifas de cada partida por mina (Conectores). Cualquier cambio mueve el VAN al momento y se guarda en el iPhone.','3D: el visor arriba; un dedo mueve el modelo, dos dedos acercan (hacia donde están), giran e inclinan, y un toque elige un sólido y abre su ficha debajo. Más abajo, el esquema de cámaras, el resumen por año (pulsar una fila marca ese físico en el 3D) y los ajustes del plan en BD, con «Todas» para la estrategia y el nivelador de CuEq.','Comparar e Informes: la comparativa de planes y escenarios y los informes de físicos y costes. Las tablas anchas se deslizan a los lados.','Más: configuración, físicos, mercado, equivalencias, versiones, riesgo, datos, autocontrol, buscador, exportar a Excel, PDF, CSV y JSON, manual, deshacer y rehacer, tema, idioma y «Restaurar la demo».'],
     s:['La primera vez que se abre el 3D descarga los sólidos (unos 45 MB) y quedan guardados: después funciona sin conexión.','«Restaurar la demo» vuelve al escenario base y borra los cambios y versiones de este iPhone.']},
   en:{t:'Using the demo on the iPhone',a:'The demo is the same program with a tab bar at the bottom. Data are anonymised: mines MA, MB and MC, costs and revenue scaled and varied per item.',
-    u:['Home: NPV, FCF, revenue, cost, margin, cash cost and AISC; below, the summary, the plant warning and every chart (“Open all” under More analysis).','Simulate: each cost item’s rate per mine (Cost drivers). Any change moves the NPV at once and is saved on the iPhone.','3D: viewer on top; one finger rotates, two fingers zoom and pan, a tap picks a solid and opens its card below. Further down, the stope chart, the summary by year (tap a row to mark that physical in 3D) and the task-database settings, with “All” for the strategy and the CuEq leveller.','Compare and Reports: plan and scenario comparison and the physicals and cost reports. Wide tables scroll sideways.','More: settings, physicals, market, equivalences, versions, risk, data, self-check, search, export to Excel, PDF, CSV and JSON, manual, undo and redo, theme, language and “Restore the demo”.'],
+    u:['Home: NPV, FCF, revenue, cost, margin, cash cost and AISC; below, the summary, the plant warning and every chart (“Open all” under More analysis).','Simulate: each cost item’s rate per mine (Cost drivers). Any change moves the NPV at once and is saved on the iPhone.','3D: viewer on top; one finger pans the model, two fingers zoom (towards them), rotate and tilt, and a tap picks a solid and opens its card below. Further down, the stope chart, the summary by year (tap a row to mark that physical in 3D) and the task-database settings, with “All” for the strategy and the CuEq leveller.','Compare and Reports: plan and scenario comparison and the physicals and cost reports. Wide tables scroll sideways.','More: settings, physicals, market, equivalences, versions, risk, data, self-check, search, export to Excel, PDF, CSV and JSON, manual, undo and redo, theme, language and “Restore the demo”.'],
     s:['The first time the 3D opens it downloads the solids (about 45 MB) and keeps them: afterwards it works offline.','“Restore the demo” goes back to the base scenario and clears this iPhone’s changes and versions.']}});}
 /* ===================== v3 · MOVIMIENTO Y TEMA ===================== */
 const mvSinMov=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}};
