@@ -38,7 +38,7 @@ body.mv .topbar .actions{display:none!important}
 body.mv .topbar .logo{width:34px!important;height:31px!important}
 body.mv .topbar h1,body.mv .topbar .title h1{font-size:17px!important}
 body.mv .topbar p{font-size:11px!important;white-space:normal}
-body.mv .tb-izq,body.mv .tb-grp{display:none!important}
+
 body.mv #kbar{flex-direction:column;align-items:stretch!important;gap:8px!important;padding:8px 0!important;position:static!important}
 body.mv #kpis{display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important}
 body.mv #kpis>*{min-width:0!important;padding:8px 10px!important;border:1px solid var(--line);border-radius:10px}
@@ -93,6 +93,81 @@ body.mv .bd3-bar .bd3-b{width:34px;height:34px}
 body.mv .bd .bd-der{scroll-margin-top:64px}
 body.mv .bd3-tabs .bd3-rp{display:none!important}
 body.mv #mvIni{margin:10px 0 4px!important;width:100%}
+/* v2: todo el ancho */
+body.mv .content{padding:0!important;margin:0!important}
+body.mv #daBar,body.mv .da-bar{display:none!important}
+body.mv .xgrid{grid-template-columns:1fr!important;display:block!important}
+body.mv .xside{display:block!important;width:auto!important;max-width:none!important}
+html:has(body.mv),body.mv{overflow-x:hidden!important;max-width:100vw}
+body.mv .tzdr{width:100vw!important;min-width:0!important;bottom:var(--mvb)!important;padding:calc(env(safe-area-inset-top) + 12px) 12px 24px!important;z-index:2600!important}
+body.mv .tzveil{z-index:2590!important}
+body.mv #x_wf .xmain{overflow-x:auto;-webkit-overflow-scrolling:touch}
+body.mv #x_wf .xmain svg{min-width:640px}
+
+/* menú Más: título y explicación */
+body.mv .mv-t{display:flex;flex-direction:column;gap:1px;color:var(--ink)}
+body.mv .mv-t small{font-size:11.5px;color:var(--ink-faint)}
+body.mv .mv-it{min-height:52px;padding:6px 12px}
+body.mv .mv-shh{padding:12px 4px 6px}
+/* barra superior: título y herramientas */
+body.mv .topbar .title{flex:1 1 100%;min-width:0}
+body.mv .topbar .title p{overflow-wrap:anywhere}
+body.mv .tb-izq{display:flex!important;gap:4px;flex-wrap:nowrap}
+body.mv .tb-izq .btn,body.mv .tb-grp .btn{min-width:38px;min-height:34px;padding:4px 8px}
+/* manual a pantalla completa: índice arriba (desplegable) y texto debajo */
+body.mv .ma-ov{padding:0!important;bottom:var(--mvb)!important;z-index:2700!important;align-items:stretch!important}
+body.mv .ma-m{width:100vw!important;height:100%!important;max-height:none!important;border-radius:0!important;display:flex!important;flex-direction:column!important;border:0!important}
+body.mv .ma-top{flex:none;padding:calc(env(safe-area-inset-top) + 8px) 10px 8px!important;gap:8px!important}
+body.mv .ma-top input{flex:1 1 160px!important}
+body.mv .ma-rd{margin-left:0!important;width:100%}
+body.mv .ma-idx{flex:none;max-height:26vh;overflow-y:auto;border-bottom:1px solid var(--line);border-right:0!important;padding:4px 0!important}
+body.mv .ma-c{flex:1 1 auto;min-height:0;overflow-y:auto!important;padding:14px 14px 28px!important;-webkit-overflow-scrolling:touch}
+body.mv .ma-c table{display:block;overflow-x:auto;max-width:100%}
+body.mv .ma-c svg,body.mv .ma-c img{max-width:100%;height:auto}
+body.mv .ma-flow{gap:6px!important}
+/* buscador */
+body.mv .ux-k{padding:calc(env(safe-area-inset-top) + 10px) 8px 0!important;bottom:var(--mvb)!important;z-index:2800!important}
+body.mv .ux-p{width:100%!important;max-width:100%!important;max-height:100%!important}
+/* tarjeta a pantalla completa */
+body.mv .card.full{left:0!important;top:0!important;width:100vw!important;height:calc(100dvh - var(--mvb))!important;border-radius:0!important;z-index:2650!important;overflow:auto!important}
+body.mv .xveil{z-index:2640!important}
+/* cabecera de las tarjetas: título a lo ancho y botones debajo a la derecha */
+body.mv .card .card-h,body.mv .card>.hd{flex-wrap:wrap!important}
+body.mv .card td,body.mv .card th,body.mv .modal td,body.mv .modal th{white-space:nowrap}
+body.mv div:has(> svg path.sk){overflow-x:auto;-webkit-overflow-scrolling:touch}
+body.mv svg:has(path.sk){min-width:880px}
+body.mv .mk-f{grid-template-columns:24px minmax(0,1fr) 52px 78px 30px!important;gap:6px!important}
+body.mv .mk-f.mk-f3{grid-template-columns:24px minmax(0,1fr) 52px!important}
+body.mv .mk-f input[type=range]{min-width:0;width:100%}
+body.mv .mk-f input{min-width:0}
+body.mv .bd .bd-der{position:relative!important;top:auto!important;padding:6px 0 12px!important;flex:none!important}
+body.mv .bd .bd-cols>#bdBody{flex:none!important;padding-top:8px}
+body.mv .bd3-tpp{max-width:calc(100vw - 24px)}
+body.mv .bd #bdVivo,body.mv .bd .bd-vivo{display:block!important;position:static!important;max-height:none!important;overflow:visible!important}
+body.mv .bd.bd-wide{width:100vw!important;height:auto!important;display:block!important;overflow-y:auto!important}
+body.mv .bd.bd-wide .bd-cols{display:flex!important;flex-direction:column!important}
+body.mv .bd.bd-wide .bd-cols>#bdBody{overflow:visible!important;max-width:none!important;width:100%!important}
+body.mv .bd.bd-wide .bd-der{overflow:visible!important}
+body.mv .bd-miniw{max-width:100%}
+body.mv .bd-rcol{display:block!important;columns:auto!important;column-count:1!important}
+body.mv .bd-rcol>*{max-width:100%;overflow-x:auto;margin-bottom:10px}
+body.mv .bd-res table{display:block;overflow-x:auto;max-width:100%}
+body.mv .modal-card{width:100vw!important;max-width:100vw!important;min-height:100%!important;max-height:none!important;border-radius:0!important;margin:0!important;border:0!important;padding-top:env(safe-area-inset-top)}
+body.mv .modal{overflow-y:auto!important;overflow-x:hidden!important;inset:0 0 var(--mvb) 0!important;z-index:2550!important}
+body.mv .mc-t{width:100%!important;table-layout:fixed}
+body.mv .mc-t td,body.mv .mc-t th{white-space:normal!important;padding:3px 2px!important}
+body.mv .mc-t td:first-child,body.mv .mc-t th:first-child{width:34%}
+body.mv .mc-t input{width:100%!important;min-width:0!important;box-sizing:border-box}
+body.mv td.cl-pl,body.mv th.cl-pl{white-space:normal!important;min-width:190px}
+body.mv .tzdr div:has(> #tzSvg){overflow-x:auto;-webkit-overflow-scrolling:touch}
+body.mv #tzSvg{min-width:720px}
+body.mv #kbar{margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;width:auto!important;top:0!important}
+body.mv .topbar{height:auto!important;min-height:0!important;align-items:flex-start!important;position:relative!important}
+body.mv .tb-izq{margin:2px 0 4px 44px}
+body.mv .tb-izq,body.mv .topbar .tb-grp{display:none!important}
+body.mv .bd3-v>div:has(>canvas){height:50vh!important}
+body.mv .bd3-tpp{position:fixed!important;left:12px!important;right:12px!important;top:140px!important;min-width:0!important;max-height:55vh;overflow:auto;z-index:2700!important}
+body.mv .bd .bd-der #bdVivo{padding:0 10px!important}
 </style>
 
 <title>LOM Demo</title>
@@ -10247,7 +10322,7 @@ if(typeof LN_D!=='undefined')[['Zoom','Zoom'],['Ver Δ por año','Show Δ by yea
 
 /* ===================== v3_53 · cajón Plan BD ancho: a la derecha, mini mapa y tablas que se actualizan con cada cambio ===================== */
 let _bdVM=null;
-const bdAncho=()=>window.innerWidth>=1200;
+const bdAncho=()=>window.innerWidth>=1200||document.body.classList.contains('mv');
 function bdVivoPinta(){const bd=document.getElementById('bd'),v=document.getElementById('bdVivo');if(!bd||!v)return;
   const ancho=bdAncho(),ms=bdMinasBD();bd.classList.toggle('bd-wide',ancho&&ms.length>0);if(!ancho||!ms.length){v.innerHTML='';return;}
   if(!ms.includes(_bdVM))_bdVM=ms[0];const m=_bdVM;
@@ -12322,32 +12397,44 @@ const MV_TABS=[['ini','Inicio','<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6
 let _mvTab='ini';
 function mvCierraTodo(){try{openDrawer('-');}catch(e){}
   document.querySelectorAll('.modal.show').forEach(m=>{try{closeModal(m.id);}catch(e){m.classList.remove('show');}});
+  [()=>maCierra(),()=>tzClose(),()=>cardFullClose(),()=>uxCierra()].forEach(f=>{try{f();}catch(e){}});
   const s=document.getElementById('mvSheet');if(s)s.hidden=true;}
 function mvVe(t){_mvTab=t;mvCierraTodo();
   try{if(t==='ini')window.scrollTo({top:0,behavior:'smooth'});
     else if(t==='sim')openDrawer('conn');
-    else if(t==='3d'){openDrawer('bd');mvSolidos();mvAyuda3d();setTimeout(()=>{const b=document.querySelector('.bd .bd-der');if(b)b.scrollIntoView({block:'start'});},350);}
+    else if(t==='3d'){openDrawer('bd');mvSolidos();mvAyuda3d();setTimeout(mvAyuda3d,3000);setTimeout(()=>{const b=document.querySelector('.bd .bd-der');if(b)b.scrollIntoView({block:'start'});},350);}
     else if(t==='cmp')openCompare();
     else if(t==='inf')rpAbrir();
     else if(t==='mas'){const s=document.getElementById('mvSheet');s.hidden=false;}}catch(e){console.error(e);}
   mvPintaBar();}
 function mvPintaBar(){document.querySelectorAll('#mvBar button').forEach(b=>b.classList.toggle('on',b.dataset.t===_mvTab));}
-const MV_MAS=[['Configuración del escenario',()=>openDrawer('cfg')],['Físicos por año',()=>openDrawer('pf')],['Mercado y precios',()=>openDrawer('mk')],
-  ['Versiones guardadas',()=>openVersions()],['Riesgo (Montecarlo)',()=>mcAbrir()],['Datos cargados',()=>openDatos()],['Manual',()=>manual()]];
+const MV_MAS=[
+  ['Escenario',[['Configuración del escenario','plan, minas, años, reparto, impuestos y cierre',()=>openDrawer('cfg')],['Conectores físico → coste','tarifas de cada partida por mina',()=>openDrawer('conn')],
+    ['Físicos por año','subir o bajar toneladas por tramos',()=>openDrawer('pf')],['Mercado y precios','precios de metales, leyes y CuEq',()=>openDrawer('mk')],['Plan en BD y 3D','cámaras, estrategia, nivelador CuEq y sólidos',()=>mvVe('3d')],
+    ['Equivalencias de físicos','qué fila alimenta cada físico',()=>eqAbrir()]]],
+  ['Análisis',[['Versiones guardadas','guardar y recuperar escenarios',()=>openVersions()],['Comparativa','planes y escenarios lado a lado',()=>openCompare()],['Riesgo (Montecarlo)','rangos y distribución del VAN',()=>mcAbrir()],
+    ['Informes','físicos, costes y lado a lado',()=>rpAbrir()],['Datos cargados','planes, bases y plantillas',()=>openDatos()],['Autocontrol','el programa se comprueba solo',()=>acAbrir()],['Buscar','partidas, físicos, minas, pantallas…',()=>buscar()]]],
+  ['Exportar',[['Informe en Excel','con fórmulas y cambios, para auditar',()=>xlExportar()],['PDF / imprimir','la página tal como se ve',()=>window.print()],['CSV','tabla de resultados',()=>exportCSV()],
+    ['Guardar JSON de trabajo','todo el trabajo en un fichero',()=>guardarJSON()],['Cargar JSON de trabajo','abrir un fichero guardado',()=>document.getElementById('sesJson').click()]]],
+  ['Ayuda',[['Manual','qué es, cómo se usa y cómo calcula',()=>manual()]]]];
 function mvMonta(){if(document.getElementById('mvBar'))return;
   const bar=document.createElement('nav');bar.id='mvBar';bar.setAttribute('aria-label','Secciones');
   bar.innerHTML=MV_TABS.map(([k,l,ic])=>`<button type="button" data-t="${k}"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${l}</span></button>`).join('');
   bar.addEventListener('click',e=>{const b=e.target.closest('button');if(b)mvVe(b.dataset.t);});document.body.appendChild(bar);
   const sh=document.createElement('div');sh.id='mvSheet';sh.hidden=true;
-  sh.innerHTML=`<div class="mv-sh"><div class="mv-shh">Más</div>${MV_MAS.map((x,i)=>`<button type="button" class="mv-it" data-i="${i}">${x[0]}<span>›</span></button>`).join('')}
+  sh.innerHTML=`<div class="mv-sh">${MV_MAS.map(([t,L],g)=>`<div class="mv-shh">${t}</div>`+L.map((x,i)=>`<button type="button" class="mv-it" data-g="${g}" data-i="${i}"><span class="mv-t">${x[0]}<small>${x[1]}</small></span><span>›</span></button>`).join('')).join('')}
+    <div class="mv-shh">Ajustes</div>
+    <div class="mv-row"><button type="button" class="mv-it mv-half" data-a="des">↶ Deshacer</button><button type="button" class="mv-it mv-half" data-a="reh">Rehacer ↷</button></div>
     <div class="mv-row"><button type="button" class="mv-it mv-half" data-a="tema">Tema claro / oscuro</button><button type="button" class="mv-it mv-half" data-a="idioma">Español / English</button></div>
-    <button type="button" class="mv-it mv-rest" data-a="rest">Restaurar la demo<span>↺</span></button>
+    <button type="button" class="mv-it mv-rest" data-a="rest"><span class="mv-t">Restaurar la demo<small>borra los cambios y versiones de este iPhone</small></span><span>↺</span></button>
     <div class="mv-nota">Demo con datos anonimizados: minas MA, MB y MC; costes e ingresos escalados y con variación por partida. No usar para decisiones.</div></div>`;
   sh.addEventListener('click',e=>{if(e.target===sh){sh.hidden=true;_mvTab='ini';mvPintaBar();return;}const b=e.target.closest('button');if(!b)return;sh.hidden=true;
-    if(b.dataset.i!=null){_mvTab='mas';MV_MAS[+b.dataset.i][1]();}
+    try{if(b.dataset.i!=null){_mvTab='mas';MV_MAS[+b.dataset.g][1][+b.dataset.i][2]();}
     else if(b.dataset.a==='tema')temaCambia();
     else if(b.dataset.a==='idioma')idiomaCambia();
-    else if(b.dataset.a==='rest')mvRestaura();
+    else if(b.dataset.a==='des')deshacer();
+    else if(b.dataset.a==='reh')rehacer();
+    else if(b.dataset.a==='rest')mvRestaura();}catch(err){console.error(err);}
     mvPintaBar();});
   document.body.appendChild(sh);
   const ini=document.createElement('section');ini.id='mvIni';ini.className='card mv-ini';
@@ -12367,21 +12454,29 @@ function mvSolidos(){if(_mvSolP)return _mvSolP;_mvSolP=(async()=>{if(!/^https?:/
       if(J.tipo==='LOM_TOPO'){try{bd3TopoPon(bd3LeeTopo(J,n));}catch(e){console.error(e);}}
       else{_bd3Auto=true;try{await bd3Carga(null,bd3Lee(J,n));}catch(e){console.error(e);}finally{_bd3Auto=false;}}}
   }finally{ov.remove();try{bd3Sync();}catch(e){}}})();return _mvSolP;}
-function mvAyuda3d(){const t=()=>document.querySelectorAll('.bd *').forEach(e=>{if(e.children.length===0&&/^Arrastrar: girar/.test(e.textContent))e.textContent='Un dedo: girar · Dos dedos: acercar y desplazar · Toque: elegir un sólido';});t();setTimeout(t,1500);setTimeout(t,5000);}
+function mvAyuda3d(){const t=()=>document.querySelectorAll('.bd *').forEach(e=>{if(e.children.length===0&&/^Arrastrar: girar/.test(e.textContent))e.textContent='Un dedo: girar · Dos dedos: acercar y desplazar · Toque: elegir un sólido';if(e.children.length===0&&/Ctrl\+rueda para ampliar/.test(e.textContent))e.textContent='Esquema de cámaras · toca una cámara para elegirla o la fila FY para marcar un año; − / + amplía';});t();setTimeout(t,1500);setTimeout(t,5000);}
 /* ---------- gestos en el 3D: dos dedos acercan (pellizco) y desplazan ---------- */
-function mvGestos(cv){if(cv._mvg)return;cv._mvg=1;cv.style.touchAction='none';const P=new Map();let g=null;
+function mvGestos(cv){if(cv._mvg)return;cv._mvg=1;cv.style.touchAction='none';const P=new Map();let g=null,pin=false;
   const dos=()=>{const [a,b]=[...P.values()];return {d:Math.hypot(a.x-b.x,a.y-b.y),x:(a.x+b.x)/2,y:(a.y+b.y)/2};};
-  cv.addEventListener('pointerdown',e=>{if(e.pointerType!=='touch')return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});if(P.size>=2){g=dos();e.stopImmediatePropagation();}},true);
-  cv.addEventListener('pointermove',e=>{if(e.pointerType!=='touch'||!P.has(e.pointerId))return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});if(P.size<2||!g)return;e.stopImmediatePropagation();
+  cv.addEventListener('pointerdown',e=>{if(e.pointerType!=='touch')return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});if(P.size>=2){pin=true;g=dos();e.stopImmediatePropagation();}else if(pin)e.stopImmediatePropagation();},true);
+  cv.addEventListener('pointermove',e=>{if(e.pointerType!=='touch'||!P.has(e.pointerId))return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});if(!pin)return;e.stopImmediatePropagation();if(P.size<2||!g)return;
     const n=dos(),V=_bd3V;if(!V)return;const k=V.cam;if(n.d>0&&g.d>0)k.d=Math.max(5,Math.min(80000,k.d*g.d/n.d));
     const M=bd3Mat(V,cv.clientWidth,cv.clientHeight),f=k.d*0.0016,dx=n.x-g.x,dy=n.y-g.y;k.t=k.t.map((v,i)=>v-M.x[i]*dx*f+M.y[i]*dy*f);g=n;bd3Pide();},true);
-  const fin=e=>{if(!P.has(e.pointerId))return;P.delete(e.pointerId);if(g){e.stopImmediatePropagation();if(P.size<2)g=null;if(!P.size)cv.dispatchEvent(new PointerEvent('pointercancel'));}};
+  const fin=e=>{if(!P.has(e.pointerId))return;P.delete(e.pointerId);if(pin){e.stopImmediatePropagation();if(P.size<2)g=null;if(!P.size)pin=false;}};
   cv.addEventListener('pointerup',fin,true);cv.addEventListener('pointercancel',fin,true);}
 bd3Raton=(function(f){return function(cv){try{mvGestos(cv);}catch(e){}return f.apply(this,arguments);};})(bd3Raton);
 /* ---------- arranque ---------- */
 mvAplica();try{matchMedia('(max-width: 900px)').addEventListener('change',mvAplica);}catch(e){}
 setTimeout(()=>{try{mvMonta();}catch(e){console.error(e);}},0);
 if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+/* ---------- manual: cómo se usa en el iPhone ---------- */
+if(typeof MA!=='undefined'&&!MA.some(o=>o.id==='movil')){const g0=MA[0]&&MA[0].g;MA.splice(1,0,{id:'movil',g:g0,p:MA[0]&&MA[0].p,ir:()=>{maCierra();mvVe('mas');},
+  es:{t:'Usar la demo en el iPhone',a:'La demo es el mismo programa con una barra de pestañas abajo. Los datos están anonimizados: minas MA, MB y MC, costes e ingresos escalados y con variación por partida.',
+    u:['Inicio: VAN, FCF, ingreso, coste, margen, cash cost y AISC; debajo, el resumen, el aviso de planta y todas las gráficas (con «Abrir todo» en Más análisis).','Simular: las tarifas de cada partida por mina (Conectores). Cualquier cambio mueve el VAN al momento y se guarda en el iPhone.','3D: el visor arriba; un dedo gira, dos dedos acercan y desplazan, un toque elige un sólido y abre su ficha debajo. Más abajo, el esquema de cámaras, el resumen por año (pulsar una fila marca ese físico en el 3D) y los ajustes del plan en BD, con «Todas» para la estrategia y el nivelador de CuEq.','Comparar e Informes: la comparativa de planes y escenarios y los informes de físicos y costes. Las tablas anchas se deslizan a los lados.','Más: configuración, físicos, mercado, equivalencias, versiones, riesgo, datos, autocontrol, buscador, exportar a Excel, PDF, CSV y JSON, manual, deshacer y rehacer, tema, idioma y «Restaurar la demo».'],
+    s:['La primera vez que se abre el 3D descarga los sólidos (unos 45 MB) y quedan guardados: después funciona sin conexión.','«Restaurar la demo» vuelve al escenario base y borra los cambios y versiones de este iPhone.']},
+  en:{t:'Using the demo on the iPhone',a:'The demo is the same program with a tab bar at the bottom. Data are anonymised: mines MA, MB and MC, costs and revenue scaled and varied per item.',
+    u:['Home: NPV, FCF, revenue, cost, margin, cash cost and AISC; below, the summary, the plant warning and every chart (“Open all” under More analysis).','Simulate: each cost item’s rate per mine (Cost drivers). Any change moves the NPV at once and is saved on the iPhone.','3D: viewer on top; one finger rotates, two fingers zoom and pan, a tap picks a solid and opens its card below. Further down, the stope chart, the summary by year (tap a row to mark that physical in 3D) and the task-database settings, with “All” for the strategy and the CuEq leveller.','Compare and Reports: plan and scenario comparison and the physicals and cost reports. Wide tables scroll sideways.','More: settings, physicals, market, equivalences, versions, risk, data, self-check, search, export to Excel, PDF, CSV and JSON, manual, undo and redo, theme, language and “Restore the demo”.'],
+    s:['The first time the 3D opens it downloads the solids (about 45 MB) and keeps them: afterwards it works offline.','“Restore the demo” goes back to the base scenario and clears this iPhone’s changes and versions.']}});}
 
 </script>
 </body>
