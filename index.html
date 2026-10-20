@@ -6,13 +6,13 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="LOM Demo">
 <meta name="theme-color" content="#0f131a"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png">
 <style>/* ===================== DEMO MÓVIL · estilos (solo con body.mv) ===================== */
-#mvBar,#mvSheet,#mvIni{display:none}
+#mvBar,.mv-sheet,#mvIni{display:none}
 body.mv{--mvb:calc(62px + env(safe-area-inset-bottom));-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
 body.mv #mvBar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:3000;height:var(--mvb);padding:4px 4px env(safe-area-inset-bottom);background:var(--rock-800,#161b24);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.25)}
 body.mv #mvBar button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:0;color:var(--ink-faint,#8a93a3);font:inherit;font-size:10.5px;font-weight:600;letter-spacing:.01em;padding:4px 0;-webkit-tap-highlight-color:transparent}
 body.mv #mvBar svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 body.mv #mvBar button.on{color:var(--copper-lt,#e0a06a)}
-body.mv #mvSheet:not([hidden]){display:flex;position:fixed;inset:0;bottom:var(--mvb);z-index:2999;background:rgba(0,0,0,.45);align-items:flex-end}
+body.mv .mv-sheet:not([hidden]){display:flex;position:fixed;inset:0;bottom:var(--mvb);z-index:2999;background:rgba(0,0,0,.45);align-items:flex-end}
 body.mv .mv-sh{width:100%;background:var(--rock-800,#161b24);border-radius:16px 16px 0 0;border-top:1px solid var(--line);padding:10px 14px 14px;max-height:80vh;overflow:auto}
 body.mv .mv-shh{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);padding:6px 4px 8px}
 body.mv .mv-it{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:48px;padding:0 12px;margin:0 0 6px;background:var(--rock-900,#0f131a);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:inherit;font-size:15px;text-align:left}
@@ -224,9 +224,9 @@ body.mv .bd3-seg button{border-radius:999px!important;transition:background-colo
 /* 9 · rebote suave: menú Más y desplegables */
 @keyframes mvHojaAbajo{from{transform:translateY(100%)}to{transform:none}}
 @keyframes mvPop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
-body.mv #mvSheet:not([hidden]) .mv-sh{animation:mvHojaAbajo var(--t-panel) var(--ease-panel) both}
-body.mv #mvSheet:not([hidden]) .mv-it,body.mv #mvSheet:not([hidden]) .mv-shh{animation:mvPop .46s var(--ease-rebote) both;animation-delay:calc(var(--i,0)*22ms + 60ms)}
-body.mv #mvSheet{transition:background-color var(--t-medio)}
+body.mv .mv-sheet:not([hidden]) .mv-sh{animation:mvHojaAbajo var(--t-panel) var(--ease-panel) both}
+body.mv .mv-sheet:not([hidden]) .mv-it,body.mv .mv-sheet:not([hidden]) .mv-shh{animation:mvPop .46s var(--ease-rebote) both;animation-delay:calc(var(--i,0)*22ms + 60ms)}
+body.mv .mv-sheet{transition:background-color var(--t-medio)}
 body.mv .mv-it{transition:transform .12s var(--ease-std),background-color var(--t-rapido)}
 body.mv .mv-it:active{transform:scale(.97)}
 @keyframes mvPopIn{from{opacity:0;transform:scale(.94) translateY(-6px)}to{opacity:1;transform:none}}
@@ -12477,10 +12477,10 @@ let _mvTab='ini';
 function mvCierraTodo(){try{openDrawer('-');}catch(e){}
   document.querySelectorAll('.modal.show').forEach(m=>{try{closeModal(m.id);}catch(e){m.classList.remove('show');}});
   [()=>maCierra(),()=>tzClose(),()=>cardFullClose(),()=>uxCierra()].forEach(f=>{try{f();}catch(e){}});
-  const s=document.getElementById('mvSheet');if(s)s.hidden=true;}
+  document.querySelectorAll('.mv-sheet').forEach(s=>s.hidden=true);}
 function mvVe(t){_mvTab=t;mvCierraTodo();
   try{if(t==='ini')window.scrollTo({top:0,behavior:'smooth'});
-    else if(t==='sim')openDrawer('conn');
+    else if(t==='sim'){const s=document.getElementById('mvSim');s.hidden=false;}
     else if(t==='3d'){openDrawer('bd');mvSolidos();mvAyuda3d();setTimeout(mvAyuda3d,3000);setTimeout(()=>{const b=document.querySelector('.bd .bd-der');if(b)b.scrollIntoView({block:'start'});},350);}
     else if(t==='cmp')openCompare();
     else if(t==='inf')rpAbrir();
@@ -12488,20 +12488,33 @@ function mvVe(t){_mvTab=t;mvCierraTodo();
   mvPintaBar();}
 function mvPintaBar(){document.querySelectorAll('#mvBar button').forEach(b=>b.classList.toggle('on',b.dataset.t===_mvTab));}
 const MV_MAS=[
-  ['Escenario',[['Configuración del escenario','plan, minas, años, reparto, impuestos y cierre',()=>openDrawer('cfg')],['Conectores físico → coste','tarifas de cada partida por mina',()=>openDrawer('conn')],
-    ['Físicos por año','subir o bajar toneladas por tramos',()=>openDrawer('pf')],['Mercado y precios','precios de metales, leyes y CuEq',()=>openDrawer('mk')],['Plan en BD y 3D','cámaras, estrategia, nivelador CuEq y sólidos',()=>mvVe('3d')],
+  ['Escenario',[['Configuración','plan, minas, años, reparto de comunes, planta, impuestos y cierre',()=>openDrawer('cfg')],['Conectores','físico → coste: tarifas de cada partida por mina',()=>openDrawer('conn')],
+    ['Físicos','perfil de producción: subir o bajar toneladas por tramos',()=>openDrawer('pf')],['Mercado','precios de metales, leyes y CuEq',()=>openDrawer('mk')],['Plan BD','cámaras, 3D, estrategia y nivelador CuEq',()=>mvVe('3d')],
     ['Equivalencias de físicos','qué fila alimenta cada físico',()=>eqAbrir()]]],
-  ['Análisis',[['Versiones guardadas','guardar y recuperar escenarios',()=>openVersions()],['Comparativa','planes y escenarios lado a lado',()=>openCompare()],['Riesgo (Montecarlo)','rangos y distribución del VAN',()=>mcAbrir()],
-    ['Informes','físicos, costes y lado a lado',()=>rpAbrir()],['Datos cargados','planes, bases y plantillas',()=>openDatos()],['Autocontrol','el programa se comprueba solo',()=>acAbrir()],['Buscar','partidas, físicos, minas, pantallas…',()=>buscar()]]],
-  ['Exportar',[['Informe en Excel','con fórmulas y cambios, para auditar',()=>xlExportar()],['PDF / imprimir','la página tal como se ve',()=>window.print()],['CSV','tabla de resultados',()=>exportCSV()],
-    ['Guardar JSON de trabajo','todo el trabajo en un fichero',()=>guardarJSON()],['Cargar JSON de trabajo','abrir un fichero guardado',()=>document.getElementById('sesJson').click()]]],
+  ['Análisis',[['Versiones','guardar y recuperar escenarios',()=>openVersions()],['Comparativa','planes y escenarios lado a lado',()=>openCompare()],['Riesgo','Montecarlo: rangos y distribución del VAN',()=>mcAbrir()],
+    ['Informes','físicos, costes y lado a lado',()=>rpAbrir()],['Datos','planes, bases de costes y macroeconómicos cargados',()=>openDatos()],['Autocontrol','el programa se comprueba solo',()=>acAbrir()],['Buscar','partidas, físicos, minas, pantallas…',()=>buscar()]]],
+  ['Exportar',[['Excel','informe con fórmulas y cambios, para auditar',()=>xlExportar()],['PDF','la página tal como se ve',()=>window.print()],['CSV','tabla de resultados',()=>exportCSV()],
+    ['Guardar JSON','todo el trabajo en un fichero',()=>guardarJSON()],['Cargar JSON','abrir un fichero guardado',()=>document.getElementById('sesJson').click()]]],
   ['Ayuda',[['Manual','qué es, cómo se usa y cómo calcula',()=>manual()]]]];
+/* hoja «Simular»: las palancas que mueven el VAN */
+const MV_SIM=[
+  ['Palancas',[['Conectores','tarifas de cada partida por mina y qué partidas se aplican',()=>openDrawer('conn')],['Configuración','reparto de comunes, capacidad de planta, tasa, impuestos, cierre y años',()=>openDrawer('cfg')],
+    ['Físicos','perfil de producción: subir o bajar toneladas por tramos de años',()=>openDrawer('pf')],['Mercado','precios de metales y leyes por mina',()=>openDrawer('mk')],
+    ['Plan BD','corte por NSR, zonas fuera, mover cámaras, estrategia y nivelador CuEq',()=>mvVe('3d')]]],
+  ['Incertidumbre',[['Riesgo','Montecarlo sobre precios, costes y mineral',()=>mcAbrir()]]],
+  ['Resultado',[['Versiones','guardar el escenario actual para compararlo',()=>openVersions()],['Comparativa','ver los escenarios guardados lado a lado',()=>openCompare()]]]];
+function mvHojaHTML(G,id){return G.map(([t,L],g)=>`<div class="mv-shh">${t}</div>`+L.map((x,i)=>`<button type="button" class="mv-it" data-h="${id}" data-g="${g}" data-i="${i}"><span class="mv-t">${x[0]}<small>${x[1]}</small></span><span>›</span></button>`).join('')).join('');}
 function mvMonta(){if(document.getElementById('mvBar'))return;
   const bar=document.createElement('nav');bar.id='mvBar';bar.setAttribute('aria-label','Secciones');
   bar.innerHTML=MV_TABS.map(([k,l,ic])=>`<button type="button" data-t="${k}"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${l}</span></button>`).join('');
   bar.addEventListener('click',e=>{const b=e.target.closest('button');if(b)mvVe(b.dataset.t);});document.body.appendChild(bar);
-  const sh=document.createElement('div');sh.id='mvSheet';sh.hidden=true;
-  sh.innerHTML=`<div class="mv-sh">${MV_MAS.map(([t,L],g)=>`<div class="mv-shh">${t}</div>`+L.map((x,i)=>`<button type="button" class="mv-it" data-g="${g}" data-i="${i}"><span class="mv-t">${x[0]}<small>${x[1]}</small></span><span>›</span></button>`).join('')).join('')}
+  const si=document.createElement('div');si.id='mvSim';si.className='mv-sheet';si.hidden=true;
+  si.innerHTML=`<div class="mv-sh"><div class="mv-shh" style="font-size:13px;color:var(--ink)">Simular · las palancas que mueven el VAN</div>${mvHojaHTML(MV_SIM,'sim')}<div class="mv-nota">Cada cambio se recalcula al momento y se guarda en el iPhone. Guarda el escenario en Versiones para compararlo.</div></div>`;
+  si.addEventListener('click',e=>{if(e.target===si){si.hidden=true;_mvTab='ini';mvPintaBar();return;}const b=e.target.closest('button');if(!b)return;si.hidden=true;
+    try{_mvTab='sim';MV_SIM[+b.dataset.g][1][+b.dataset.i][2]();}catch(err){console.error(err);}mvPintaBar();});
+  document.body.appendChild(si);
+  const sh=document.createElement('div');sh.id='mvSheet';sh.className='mv-sheet';sh.hidden=true;
+  sh.innerHTML=`<div class="mv-sh">${mvHojaHTML(MV_MAS,'mas')}
     <div class="mv-shh">Ajustes</div>
     <div class="mv-row"><button type="button" class="mv-it mv-half" data-a="des">↶ Deshacer</button><button type="button" class="mv-it mv-half" data-a="reh">Rehacer ↷</button></div>
     <div class="mv-row"><button type="button" class="mv-it mv-half" data-a="tema">Tema claro / oscuro</button><button type="button" class="mv-it mv-half" data-a="idioma">Español / English</button></div>
@@ -12571,10 +12584,10 @@ if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))window.addEv
 /* ---------- manual: cómo se usa en el iPhone ---------- */
 if(typeof MA!=='undefined'&&!MA.some(o=>o.id==='movil')){const g0=MA[0]&&MA[0].g;MA.splice(1,0,{id:'movil',g:g0,p:MA[0]&&MA[0].p,ir:()=>{maCierra();mvVe('mas');},
   es:{t:'Usar la demo en el iPhone',a:'La demo es el mismo programa con una barra de pestañas abajo. Los datos están anonimizados: dos minas (MB y MC) con zonas, niveles y labores renombrados y zonas desplazadas en el 3D; costes e ingresos escalados y con variación por partida.',
-    u:['Inicio: VAN, FCF, ingreso, coste, margen, cash cost y AISC; debajo, el resumen, el aviso de planta y todas las gráficas (con «Abrir todo» en Más análisis).','Simular: las tarifas de cada partida por mina (Conectores). Cualquier cambio mueve el VAN al momento y se guarda en el iPhone.','3D: el visor arriba; un dedo mueve el modelo, dos dedos acercan (hacia donde están), giran e inclinan, y un toque elige un sólido y abre su ficha debajo. Más abajo, el esquema de cámaras, el resumen por año (pulsar una fila marca ese físico en el 3D) y los ajustes del plan en BD, con «Todas» para la estrategia y el nivelador de CuEq.','Comparar e Informes: la comparativa de planes y escenarios y los informes de físicos y costes. Las tablas anchas se deslizan a los lados.','Más: configuración, físicos, mercado, equivalencias, versiones, riesgo, datos, autocontrol, buscador, exportar a Excel, PDF, CSV y JSON, manual, deshacer y rehacer, tema, idioma y «Restaurar la demo».'],
+    u:['Inicio: VAN, FCF, ingreso, coste, margen, cash cost y AISC; debajo, el resumen, el aviso de planta y todas las gráficas (con «Abrir todo» en Más análisis).','Simular: abre las palancas que mueven el VAN (Conectores, Configuración, Físicos, Mercado y Plan BD), el Riesgo y Versiones para guardar el escenario. Cualquier cambio mueve el VAN al momento y se guarda en el iPhone.','3D: el visor arriba; un dedo mueve el modelo, dos dedos acercan (hacia donde están), giran e inclinan, y un toque elige un sólido y abre su ficha debajo. Más abajo, el esquema de cámaras, el resumen por año (pulsar una fila marca ese físico en el 3D) y los ajustes del plan en BD, con «Todas» para la estrategia y el nivelador de CuEq.','Comparar e Informes: la comparativa de planes y escenarios y los informes de físicos y costes. Las tablas anchas se deslizan a los lados.','Más: los mismos menús que en el escritorio (Configuración, Conectores, Físicos, Mercado, Plan BD, Equivalencias, Versiones, Comparativa, Riesgo, Informes, Datos, Autocontrol, Buscar, Excel, PDF, CSV, Guardar y Cargar JSON, Manual), deshacer y rehacer, tema, idioma y «Restaurar la demo».'],
     s:['La primera vez que se abre el 3D descarga los sólidos (unos 30 MB) y quedan guardados: después funciona sin conexión.','«Restaurar la demo» vuelve al escenario base y borra los cambios y versiones de este iPhone.']},
   en:{t:'Using the demo on the iPhone',a:'The demo is the same program with a tab bar at the bottom. Data are anonymised: two mines (MB and MC) with renamed zones, levels and workings and zones shifted in 3D; costs and revenue scaled and varied per item.',
-    u:['Home: NPV, FCF, revenue, cost, margin, cash cost and AISC; below, the summary, the plant warning and every chart (“Open all” under More analysis).','Simulate: each cost item’s rate per mine (Cost drivers). Any change moves the NPV at once and is saved on the iPhone.','3D: viewer on top; one finger pans the model, two fingers zoom (towards them), rotate and tilt, and a tap picks a solid and opens its card below. Further down, the stope chart, the summary by year (tap a row to mark that physical in 3D) and the task-database settings, with “All” for the strategy and the CuEq leveller.','Compare and Reports: plan and scenario comparison and the physicals and cost reports. Wide tables scroll sideways.','More: settings, physicals, market, equivalences, versions, risk, data, self-check, search, export to Excel, PDF, CSV and JSON, manual, undo and redo, theme, language and “Restore the demo”.'],
+    u:['Home: NPV, FCF, revenue, cost, margin, cash cost and AISC; below, the summary, the plant warning and every chart (“Open all” under More analysis).','Simulate: opens the levers that move the NPV (Cost drivers, Settings, Physicals, Market and Task database), Risk and Versions to save the scenario. Any change moves the NPV at once and is saved on the iPhone.','3D: viewer on top; one finger pans the model, two fingers zoom (towards them), rotate and tilt, and a tap picks a solid and opens its card below. Further down, the stope chart, the summary by year (tap a row to mark that physical in 3D) and the task-database settings, with “All” for the strategy and the CuEq leveller.','Compare and Reports: plan and scenario comparison and the physicals and cost reports. Wide tables scroll sideways.','More: the same menus as on desktop (Settings, Cost drivers, Physicals, Market, Task database, Equivalences, Versions, Comparison, Risk, Reports, Data, Self-check, Search, Excel, PDF, CSV, Save and Load JSON, Manual), undo and redo, theme, language and “Restore the demo”.'],
     s:['The first time the 3D opens it downloads the solids (about 30 MB) and keeps them: afterwards it works offline.','“Restore the demo” goes back to the base scenario and clears this iPhone’s changes and versions.']}});}
 /* ===================== v3 · MOVIMIENTO Y TEMA ===================== */
 const mvSinMov=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}};
@@ -12600,7 +12613,7 @@ function mvKpiVig(){const k=document.getElementById('kpis');if(!k||k._mvo)return
 function mvPillPinta(){const p=document.getElementById('mvPill');if(!p)return;const kv=[...document.querySelectorAll('#kpis .kv')];const t=i=>kv[i]?[kv[i].querySelector('.l').textContent.replace(/ @.*$/,''),kv[i].querySelector('.v').textContent]:['',''];
   const a=t(0),b=t(1);p.querySelector('.mp-t').innerHTML=`<span><small>${escH(a[0])}</small>${escH(a[1])}</span><span><small>${escH(b[0])}</small>${escH(b[1])}</span>`;}
 function mvPill(){if(document.getElementById('mvPill'))return;const p=document.createElement('div');p.id='mvPill';p.setAttribute('role','region');p.setAttribute('aria-label','Resumen fijo');
-  p.innerHTML='<div class="mp-t"></div><button type="button" data-a="3d">3D</button><button type="button" class="pri" data-a="sim">Simular</button>';
+  p.innerHTML='<div class="mp-t"></div><button type="button" class="pri" data-a="3d">3D</button>';
   p.addEventListener('click',e=>{const b=e.target.closest('button');if(b)mvVe(b.dataset.a);});document.body.appendChild(p);mvPillPinta();
   const kb=document.getElementById('kbar');if(kb&&'IntersectionObserver' in window)new IntersectionObserver(es=>{const fuera=!es[0].isIntersecting&&es[0].boundingClientRect.top<0;p.classList.toggle('on',fuera);},{threshold:0}).observe(kb);}
 /* 8 · carrusel de gráficas en Inicio */
@@ -12612,7 +12625,7 @@ function mvCarrusel(){if(document.querySelector('.mv-car'))return;const ids=['x_
   car.addEventListener('scroll',()=>{cancelAnimationFrame(car._r);car._r=requestAnimationFrame(marca);},{passive:true});marca();
   try{renderAll();}catch(e){}}
 /* 9 · índice de cada elemento del menú Más para el escalonado */
-function mvSheetIdx(){document.querySelectorAll('#mvSheet .mv-it,#mvSheet .mv-shh').forEach((e,i)=>e.style.setProperty('--i',i));}
+function mvSheetIdx(){document.querySelectorAll('.mv-sheet').forEach(h=>h.querySelectorAll('.mv-it,.mv-shh').forEach((e,i)=>e.style.setProperty('--i',i)));}
 /* arranque de la capa de movimiento */
 setTimeout(()=>{try{if(!document.body.classList.contains('mv'))return;mvCarrusel();mvPill();mvKpiVig();mvSheetIdx();mvIndicador();mvReveal();
   ['renderAll','gToggle','gTodos','aplicarUI'].forEach(n=>{if(typeof window[n]==='function'){const f=window[n];window[n]=function(){const r=f.apply(this,arguments);setTimeout(()=>{try{mvReveal();}catch(e){}},30);return r;};}});}catch(e){console.error(e);}},60);
