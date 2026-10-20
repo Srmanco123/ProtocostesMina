@@ -247,6 +247,14 @@ body.mv .mv-3dc:active{transform:scale(.98)}
 /* v3b · en el móvil se quita el filtro «Físicos ▾» de la barra del 3D */
 body.mv .bd3-fisw{display:none!important}
 body.mv .bd .bd3-v canvas{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+/* v7 · Informes en el móvil: las tres columnas fijas (fila, tendencia, total) más estrechas para que se vean los años */
+body.mv #mRp table.rp-t{--rp-c1:132px;--rp-c2:52px;--rp-c3:78px}
+body.mv #mRp table.rp-t .c1,body.mv #mRp table.rp-t .c13{min-width:var(--rp-c1)!important;max-width:var(--rp-c1)!important;width:var(--rp-c1)!important;white-space:normal!important;font-size:11px;line-height:1.25;padding-left:4px!important}
+body.mv #mRp table.rp-t tr.rp-sec .c13,body.mv #mRp table.rp-t tr.rp-sec td:first-child{max-width:none!important;width:auto!important}
+body.mv #mRp table.rp-t .c2 svg{max-width:46px}
+body.mv #mRp table.rp-t th{min-width:62px!important}
+body.mv #mRp table.rp-t td,body.mv #mRp table.rp-t th{padding:4px 5px!important;font-size:11px}
+body.mv #mRp .rp-sc{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
 </style>
 
 <title>LOM Demo</title>
