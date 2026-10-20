@@ -12643,6 +12643,8 @@ setTimeout(()=>{try{if(!document.body.classList.contains('mv'))return;mvCarrusel
     if(ver!==null||document.cookie.includes('x'))location.reload();else location.reload();};
   if(ver===null){try{if(!Object.keys(localStorage).some(k=>/^LOM_ECON_V3_SESION|^lom_bd3/.test(k))){localStorage.setItem('lom_demo_datos',V);return;}}catch(e){}}
   try{bd3DbOp('readwrite',s=>s.clear()).then(fin,fin);}catch(e){fin();}})();
+/* v8 · en el móvil los informes abren en «Costes» */
+rpAbrir=(function(f){return function(){const r=f.apply(this,arguments);try{if(document.body.classList.contains('mv')){const b=[...document.querySelectorAll('#mRp button')].find(x=>x.textContent.trim()==='Costes');if(b&&!b.classList.contains('on'))b.click();}}catch(e){console.error(e);}return r;};})(rpAbrir);
 
 </script>
 </body>
